@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var SessionSchema = new mongoose.Schema({
+var SessionInputSchema = new mongoose.Schema({
   username: String,
   input: Number
 });

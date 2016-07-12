@@ -28,18 +28,18 @@ UserSchema.methods.comparePasswords = function(password) {
   });
 };
 
-UserSchema.pre('save', function(next){
+UserSchema.pre('save', function(next) {
   if (!user.isModified('password')) {
     return next();
   }
 
-  bcrypt.genSalt(SALT_ROUNDS, function(err, salt){
-    if (err){
+  bcrypt.genSalt(SALT_ROUNDS, function(err, salt) {
+    if (err) {
       return next(err);
     }
     bcrypt.hash(user.password, salt, null, function(err, hash) {
 
-    })
+    });
     user.pasword = hash;
-  })
+  });
 });

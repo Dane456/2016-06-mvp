@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 
 
-export class MyComponent {
+export class SliderComponent {
   constructor() { 
     
   }
