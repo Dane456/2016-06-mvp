@@ -12,8 +12,12 @@ mongoose.connection.on('error', function (err) {
   console.log('Mongoose default connection error: ' + err);
 }); 
 
-require('./config/middleware.js');
-require('./config/routes.js');
+require('./config/middleware.js')(app, express);
+require('./config/routes.js')(app, express);
 
-app.listen(8000);
+app.listen(8000, function(err, success) {
+  if(!err) {
+    console.log("Listening on port 8000.....");
+  }
+});
 module.exports = app;
