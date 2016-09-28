@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SliderComponent } from './slider.component';
-import { MainService } from './main.service.ts';
 
 @Component({
   selector: 'my-app',

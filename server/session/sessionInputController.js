@@ -6,8 +6,10 @@ var returnInput = Q.nbind(SessionInput.findAll, SessionInput);
 
 module.exports = {
   updateInput: function(req, res, next) {
-    updateInput({username: req.body.username}, {$set: {input: req.body.sessionInput}})
+    console.log('Express updateInput: ', req.body.username, req.body.input);
+    SessionInput.update({username: req.body.username}, {$set: {input: req.body.input}})
     .then(function(response) {
+      console.log('in mongodb update response');
       if (!response.acknowledged) {
         console.log('Update not acknowledged');
         res.send(match);
@@ -18,7 +20,9 @@ module.exports = {
     });
   },
   returnInput: function(req, res, next) {
-    returnInput({}).then(function(links) {
+    console.log('Express returnInput: ');
+    SessionInput.find().then(function(links) {
+      console.log('Db call returning :', links);
       res.json(links);
     });
   }

@@ -9,22 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var slider_service_1 = require('./slider.service');
 var SliderComponent = (function () {
-    function SliderComponent() {
-        this.name = 'Max';
+    function SliderComponent(sliderService) {
+        this.sliderService = sliderService;
+        this.nativeInput = 0;
+        this.dataChange = 0;
     }
-    SliderComponent.prototype.onRangeChange = function () {
-        console.log('valueChanged');
-    };
-    SliderComponent.prototype.sayMyName = function () {
-        console.log('My name is', this.name);
+    SliderComponent.prototype.onChange = function () {
+        var _this = this;
+        this.nativeInput = this.sliderInput;
+        this.sliderService.postInput({ username: 'user1', input: this.sliderInput })
+            .subscribe(function (response) {
+            console.log('Angular2 Post response: ', response);
+        });
+        this.sliderService.getInput()
+            .subscribe(function (allData) {
+            _this.dataChange = allData[0].input;
+            console.log('Angular2 Get Response :', allData);
+        });
     };
     SliderComponent = __decorate([
         core_1.Component({
             selector: 'slider',
-            template: "<ng2-slider \n\t\t\t    min=\"6\"\n\t\t\t    max=\"23\"\n\t\t\t    startValue=\"9\"\n\t\t\t    endValue=\"21\"\n\t\t\t    stepValue=\"2\"\n\t\t\t    [normalHandlerStyle]=\"{ 'background-color': 'green'}\"\n\t\t\t    [slidingHandlerStyle]=\"{\n\t\t\t          'border-radius': '9px',\n\t\t\t          'background-color': 'red'\n\t\t\t    }\">\n\t\t\t</ng2-slider>"
+            template: "<h1>Direct Data-Bound Input</h1>\n  \t\t\t<h1>{{sliderInput}}</h1>\n  \t\t\t<h3>Server Data</h3>\n  \t\t\t<h3>{{dataChange}}</h3>\n  \t\t\t<input [(ngModel)]=\"sliderInput\" (change)=onChange() type=\"range\">",
+            providers: [slider_service_1.SliderService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [slider_service_1.SliderService])
     ], SliderComponent);
     return SliderComponent;
 }());
